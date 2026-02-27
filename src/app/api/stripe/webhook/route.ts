@@ -35,8 +35,17 @@ export async function POST(request: Request) {
         })
         .eq("id", businessId);
 
-      // Provision phone number and create Vapi assistant
-      await provisionPhoneNumber(businessId);
+      // Fetch business and provision Vapi number + assistant
+      const { data: business } = await supabase
+        .from("businesses")
+        .select("*")
+        .eq("id", businessId)
+        .single();
+
+      if (business && !business.phone_number) {
+        const fields = await provisionPhoneNumber(business);
+        await supabase.from("businesses").update(fields).eq("id", businessId);
+      }
       break;
     }
 

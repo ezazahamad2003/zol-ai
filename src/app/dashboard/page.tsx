@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/server/supabase/server";
 import { PhoneCall, Calendar, TrendingUp, Clock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { ProvisionRetryButton } from "@/components/dashboard/provision-retry-button";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -58,13 +59,20 @@ export default async function DashboardPage() {
 
       {/* Provisioning Banner — shown only if number not yet assigned */}
       {isActive && !business.phone_number && (
-        <div className="bg-blue-950 border border-blue-800 text-blue-300 rounded-xl px-5 py-4 mb-6 flex items-center gap-3">
-          <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full animate-spin shrink-0" />
+        <div className="bg-blue-950 border border-blue-800 text-blue-300 rounded-xl px-5 py-4 mb-6 flex items-start gap-3">
+          <div className="w-4 h-4 mt-0.5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin shrink-0" />
           <div>
-            <p className="font-semibold text-sm">Setting up your phone number…</p>
-            <p className="text-xs text-blue-400 mt-0.5">
-              This takes about 30 seconds. Refresh the page in a moment.
+            <p className="font-semibold text-sm">
+              {business.vapi_phone_number_id
+                ? "Waiting for your number to activate…"
+                : "Setting up your phone number…"}
             </p>
+            <p className="text-xs text-blue-400 mt-0.5">
+              {business.vapi_phone_number_id
+                ? "Vapi is assigning your number. This usually takes 1–2 minutes."
+                : "If this takes more than a minute, use the button below to retry."}
+            </p>
+            <ProvisionRetryButton pendingActivation={!!business.vapi_phone_number_id} />
           </div>
         </div>
       )}

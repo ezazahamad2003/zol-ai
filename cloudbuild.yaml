@@ -1,0 +1,24 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - build
+      - '--build-arg'
+      - 'NEXT_PUBLIC_SUPABASE_URL=${_NEXT_PUBLIC_SUPABASE_URL}'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_SUPABASE_ANON_KEY=${_NEXT_PUBLIC_SUPABASE_ANON_KEY}'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_APP_URL=${_NEXT_PUBLIC_APP_URL}'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/zol-ai'
+      - '.'
+
+images:
+  - 'gcr.io/$PROJECT_ID/zol-ai'
+
+substitutions:
+  _NEXT_PUBLIC_SUPABASE_URL: 'https://nigbcsowtrwzzvtvzlsd.supabase.co'
+  _NEXT_PUBLIC_SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pZ2Jjc293dHJ3enp2dHZ6bHNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwODEwMTUsImV4cCI6MjA4NzY1NzAxNX0.FrqWl5KHKSwv-A_y-blUg2HtOpzlFEeS0hDG4_sVGmI'
+  _NEXT_PUBLIC_APP_URL: 'https://zol-ai-110370896970.us-central1.run.app'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

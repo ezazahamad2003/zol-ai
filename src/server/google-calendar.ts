@@ -115,7 +115,7 @@ export async function createCalendarEvent(
   durationMins: number,
   booking: {
     callerName: string;
-    callerPhone: string;
+    callerPhone?: string;
     service: string | null;
     date: string;
     time: string;
@@ -131,7 +131,7 @@ export async function createCalendarEvent(
     calendarId,
     requestBody: {
       summary: `${booking.callerName}${booking.service ? ` — ${booking.service}` : ""}`,
-      description: `Booked via ${businessName} AI Receptionist\nPhone: ${booking.callerPhone}`,
+      description: `Booked via ${businessName} AI Receptionist${booking.callerPhone ? `\nPhone: ${booking.callerPhone}` : ""}`,
       start: { dateTime: startUtc.toISOString(), timeZone: timezone },
       end: { dateTime: endUtc.toISOString(), timeZone: timezone },
       attendees: [{ displayName: booking.callerName }],
