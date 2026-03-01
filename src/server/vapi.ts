@@ -123,7 +123,7 @@ export async function createVapiAssistant(business: Business): Promise<string> {
       },
       voice: {
         provider: "11labs",
-        voiceId: "sarah",
+        voiceId: business.voice_id ?? "EXAVITQu4vr4xnSDxMaL",
       },
       firstMessage: `Thank you for calling ${business.name}! How can I help you today?`,
       endCallFunctionEnabled: true,
@@ -228,6 +228,10 @@ export async function updateVapiAssistant(business: Business): Promise<void> {
     method: "PATCH",
     body: JSON.stringify({
       model: { provider: "openai", model: "gpt-4o-mini", systemPrompt },
+      voice: {
+        provider: "11labs",
+        voiceId: business.voice_id ?? "EXAVITQu4vr4xnSDxMaL",
+      },
       firstMessage: `Thank you for calling ${business.name}! How can I help you today?`,
     }),
   });

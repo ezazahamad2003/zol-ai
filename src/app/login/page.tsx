@@ -1,5 +1,5 @@
 import { PhoneCall } from "lucide-react";
-import { LoginButton } from "./login-button";
+import { LoginForm } from "./login-button";
 
 export default async function LoginPage({
   searchParams,
@@ -22,12 +22,7 @@ export default async function LoginPage({
         </div>
 
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8">
-          {params.error && (
-            <div className="mb-4 p-3 bg-red-900/40 border border-red-700 rounded-lg text-red-300 text-xs break-all">
-              {params.error}
-            </div>
-          )}
-          <LoginButton />
+          <LoginForm initialError={params.error} />
           <p className="text-center text-xs text-gray-600 mt-6">
             By signing in, you agree to our Terms of Service and Privacy Policy.
           </p>
